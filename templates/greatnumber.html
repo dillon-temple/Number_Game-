@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Great Number Game</title>
+  </head>
+  <style>
+    *{
+      font-family:"Gill Sans";
+    }
+    body{
+      height:100%;
+      margin:0px;
+      padding:0px;
+    }
+    #wrapper {
+      padding: 12px;
+      vertical-align: middle;
+      height: 450px;
+      width: 365px;
+      border:3px solid black;
+      border-radius:8px;
+      background-image: url({{url_for('static', filename='back.jpeg')}});
+      background-size: cover;
+      background-position:center;
+    
+    }
+
+    h1 {
+      font-size: 14pt;
+      text-align: center;
+      color:white;
+    }
+    h2 {
+      font-size: 12pt;
+      text-align: center;
+      color:white;
+    }
+    h3 {
+      text-align: center;
+      font-size: 10pt;
+      color:white;
+      margin-bottom:39px;
+    }
+
+    h4{
+      position:relative;
+      font-size:11pt;
+      left:100px;
+      color:white;
+      margin-bottom:27px;
+      text-decoration:underline;
+    }
+
+    .mainbox {
+      height: 35px;
+      width: 150px;
+      background-image:
+        linear-gradient(
+        45deg, 
+       #00E2DC, #0070EE, #425B53);
+      color: white;
+      margin: 0px 0px 20px 105px;
+      padding: 60px 0px 50px 0px;
+      text-align: center;
+      font-size: 16pt;
+      border: 2px black solid;
+      border-radius: 60pt;
+    }
+    .mainbox2 {
+      height: 35px;
+      width: 150px;
+      background-image:
+        linear-gradient(
+        45deg, 
+       #263722, #556C43, #9BC87D);
+      color: white;
+      margin: 0px 50px 20px 105px;
+      padding: 60px 0px 50px 0px;
+      text-align: center;
+      font-size: 16pt;
+      border: 2px black solid;
+      border-radius:60pt;
+    }
+    .center {
+      margin-top: 50%;
+    }
+    #form_text {
+      margin-left: 150px;
+      color:white;
+    }
+    #guess_input {
+      margin-left: 130px;
+    }
+    .thebutton {
+      margin: 10px 0px 0px 165px;
+      border: 2px black solid;
+      padding: 5px 10px 5px 10px;
+      box-shadow: 2px 2px black;
+      text-decoration: none;
+    }
+    .thebutton2 {
+      position: relative;
+      top: 30px;
+      margin: 35px 0px 0px 165px;
+      color: white;
+      background-color: #ff0012;
+      border: 2px black solid;
+      padding: 5px 10px 5px 10px;
+      box-shadow: 2px 2px black;
+      text-decoration: none;
+    }
+    .thebutton3 {
+      position: relative;
+      top: 20px;
+      background-color: white;
+      border: 2px black solid;
+      padding: 3px 10px 2px 10px;
+      box-shadow: 2px 2px black;
+      text-decoration: none;
+      border-radius:60pt;
+    }
+  </style>
+  <body>
+    <div id="wrapper">
+
+      <h1>Welcome to the Great Number Game!</h1>
+      <h2>I am thinking of a number between 1 and 100</h2>
+      {% if session["player_number"] != session["game_number"] %}
+      <h3>Take a guess!</h3>
+      {% endif %} 
+      
+      {% if session["player_number"] == session["game_number"] %}
+          <h4>Amount of guesses: {{session["attempts"]}}</h4>
+      {% endif %} 
+  {% if session["player_number"] != 0%} {% if
+      session["player_number"] < session["game_number"]%}
+          <div class="mainbox">GO HIGHER</div>
+      {% endif %} 
+      {% if session["player_number"] > session["game_number"]%}
+          <div class="mainbox">GO LOWER</div>
+      {% endif %} 
+      
+      {% if session["player_number"] == session["game_number"]%}
+          <div class="mainbox2">
+            YOU WIN!
+            <a class="thebutton3" href="/destroy_session">Play Again</a>
+          </div>
+      {% endif %} 
+      {% endif %} {% if session["player_number"] !=
+      session["game_number"] %}
+      <form action="/guess" method="post" id="custom_form" required>
+        <a id="form_text">Enter a Guess!</a>
+        <input id="guess_input" type="number" name="num" /><br />
+        <input class="thebutton" type="submit" value="Submit" />
+      </form>
+      {% endif %}
+      <!-- <a class="thebutton2" href="/destroy_session">Reset</a> -->
+    </div>
+  </body>
+</html>
